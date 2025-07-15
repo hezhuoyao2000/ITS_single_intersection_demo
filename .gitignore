@@ -1,0 +1,165 @@
+# Python环境文件夹
+.venv/
+venv/
+env.bak/
+venv.bak/
+
+# Python缓存文件
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# 单元测试/覆盖率报告
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# 项目特定文件
+# 模型文件（通常很大）
+models/*.pth
+models/*.pt
+models/*.pkl
+models/*.h5
+
+# 日志文件
+*.log
+logs/
+log/
+
+# 临时文件
+*.tmp
+*.temp
+temp/
+tmp/
+
+# 数据文件
+*.csv
+*.json
+*.xml
+*.txt
+!requirements.txt
+!README.md
+!*.md
+!simulator_config.json
+!training_config.json
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 训练过程中的临时文件
+*.bak
+*.swp
+*.swo
+*~
+
+# 结果文件（可选，根据需要调整）
+# 1.basic_simulation_result.csv
+# 3.AI_simulation_result.csv
+
+# 测试输出
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 环境变量文件
+.env
+.env.local
+.env.*.local
+
+# 配置文件（可选，根据需要调整）
+# simulator_config.json
+# training_config.json 

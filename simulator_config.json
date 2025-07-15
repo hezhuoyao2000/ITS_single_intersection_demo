@@ -1,0 +1,64 @@
+{
+  "intersection": {
+    "type": "cross_intersection",
+    "lanes_per_direction": 2,
+    "intersection_width": 30.0,
+    "vehicle_gap": 7.0
+  },
+  "signal_phases": {
+    "phase1": {
+      "name": "NS_STRAIGHT_RIGHT",
+      "description": "南北方向直行和右转",
+      "lanes": ["N_L", "N_R", "S_L", "S_R"],
+      "yellow_duration": 3,
+      "all_red_duration": 1
+    },
+    "phase2": {
+      "name": "EW_STRAIGHT_RIGHT", 
+      "description": "东西方向直行和右转",
+      "lanes": ["E_L", "E_R", "W_L", "W_R"],
+      "yellow_duration": 3,
+      "all_red_duration": 1
+    }
+  },
+  "traffic_flow": {
+    "arrival_rates": {
+      "N_L": 9,
+      "N_R": 5,
+      "S_L": 9, 
+      "S_R": 5,
+      "E_L": 9,
+      "E_R": 5,
+      "W_L": 9,
+      "W_R": 5
+    },
+    "vehicle_types": {
+      "car": {
+        "ratio": 0.8,
+        "straight_time": {"mean": 6, "std": 1},
+        "right_turn_time": {"mean": 3, "std": 1}
+      },
+      "truck": {
+        "ratio": 0.2,
+        "straight_time": {"mean": 8, "std": 1.5},
+        "right_turn_time": {"mean": 4, "std": 1.5}
+      }
+    }
+  },
+  "optimization": {
+    "objective_weights": {
+      "delay": 0.05,
+      "queue": 0.9
+    },
+    "signal_control": {
+      "green_min": 0,
+      "green_max": 60,
+      "action_discretization": 10
+    }
+  },
+  "simulation": {
+    "time_step": 1.0,
+    "simulation_duration": 3600,
+    "evaluation_window": 60
+  }
+} 

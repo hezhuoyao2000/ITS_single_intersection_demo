@@ -1,0 +1,29 @@
+# Core scientific computing libraries 核心科学计算库
+numpy>=1.21.0
+scipy>=1.7.0
+
+# Deep learning framework 深度学习框架
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Visualization libraries 可视化库
+matplotlib>=3.5.0
+
+# Progress bar and logging 进度条和日志
+tqdm>=4.64.0
+tensorboard>=2.10.0
+
+# Other utility libraries 其他工具库
+# These are Python standard libraries, no need to install separately 这些是Python标准库，不需要额外安装
+# - json
+# - random
+# - time
+# - os
+# - sys
+# - csv
+# - glob
+# - shutil
+# - typing
+# - enum
+# - collections
+# - enum 
