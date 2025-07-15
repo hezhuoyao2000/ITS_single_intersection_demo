@@ -1,207 +1,207 @@
-# 智能交通信号控制系统 - 两相位优化版本
+# Intelligent Traffic Signal Control System - Two-Phase Optimized Version
 
-## 项目简介
+## Project Overview
 
-这是一个基于强化学习的智能交通信号控制系统，专门针对十字路口进行信号控制优化。系统采用简化的两相位信号控制策略，使用GPU加速的DQN算法实现智能信号控制，最小化车辆延误时间和排队长度。
+This is a reinforcement learning-based intelligent traffic signal control system, specifically designed for optimizing signal control at intersections. The system adopts a simplified two-phase signal control strategy and utilizes a GPU-accelerated DQN algorithm to achieve intelligent signal control, minimizing vehicle delay time and queue length.
 
-注意这个项目只是一个菜逼的大作业，很简单，不成熟有很多问题，学生拿来混一混就可以了。可能你能得到一些东西，但是也不太可能。
+AAttention！ this project is just a school assignment that's very simple and immature with many issues， at least it can run, it's for sutdents, no matter what you can get from this piece of shit, I well update and reform this project if possible. im just a rookie.
 
-## 系统特点
+## System Features
 
-- **简化的两相位信号系统**: 南北方向和东西方向交替通行
-- **基于强化学习的动态控制**: 使用GPU加速的DQN算法实现智能信号控制
-- **实时车辆流量模拟**: 基于泊松分布的车辆到达模拟
-- **可视化交通状态**: 实时显示交通状态和性能指标
-- **参数化配置**: 模拟器参数和训练参数分别管理
-- **GPU加速训练**: 支持NVIDIA GPU加速训练
+- **Simplified Two-Phase Signal System**: Alternating passage for north-south and east-west directions
+- **Reinforcement Learning-Based Dynamic Control**: Intelligent signal control using GPU-accelerated DQN algorithm
+- **Real-Time Traffic Flow Simulation**: Vehicle arrivals simulated based on Poisson distribution
+- **Traffic State Visualization**: Real-time display of traffic status and performance metrics
+- **Parametric Configuration**: Separate management of simulator and training parameters
+- **GPU-Accelerated Training**: Supports NVIDIA GPU-accelerated training
 
-## 系统架构
+## System Architecture
 
-### 三大核心模块
+### Three Core Modules
 
-1. **交通模拟器模块** (`env/traffic_env.py`)
-   - 简化的两相位交通环境模拟
-   - 信号灯控制逻辑
-   - 车辆排队和通行模拟
+1. **Traffic Simulator Module** (`env/traffic_env.py`)
+   - Simplified two-phase traffic environment simulation
+   - Signal light control logic
+   - Vehicle queuing and passage simulation
 
-2. **可视化模块** (`visualization/visualizer.py`)
-   - 路口布局可视化
-   - 实时交通状态显示
-   - 性能指标图表
+2. **Visualization Module** (`visualization/visualizer.py`)
+   - Intersection layout visualization
+   - Real-time traffic status display
+   - Performance metrics charts
 
-3. **强化学习模块** (`agent/gpu_dqn_agent.py`)
-   - GPU加速的DQN智能体实现
-   - 状态空间和动作空间定义
-   - 训练和推理功能
+3. **Reinforcement Learning Module** (`agent/gpu_dqn_agent.py`)
+   - GPU-accelerated DQN agent implementation
+   - State and action space definition
+   - Training and inference functions
 
-### 辅助模块
+### Auxiliary Modules
 
-- **车辆类** (`traffic/vehicle.py`): 车辆对象定义和属性管理
-- **车流生成器** (`traffic/flow_generator.py`): 基于泊松分布的车辆到达模拟
-- **工具函数** (`utils/distributions.py`): 概率分布和计算工具
+- **Vehicle Class** (`traffic/vehicle.py`): Vehicle object definition and attribute management
+- **Traffic Flow Generator** (`traffic/flow_generator.py`): Vehicle arrival simulation based on Poisson distribution
+- **Utility Functions** (`utils/distributions.py`): Probability distribution and calculation tools
 
-## 路口设计
+## Intersection Design
 
-### 几何布局
-- 十字路口，双向共4车道
-- 每个方向2车道（左车道和右车道）
-- 采用左侧通行规则
+### Geometric Layout
+- Cross intersection, 4 lanes in total (2 per direction)
+- Each direction has 2 lanes (left lane for straight, right lane for right turn)
+- Left-hand traffic rule
 
-### 信号相位
-简化的两相位信号系统：
+### Signal Phases
+Simplified two-phase signal system:
 
-**相位1 - 南北方向通行：**
-- 南北方向绿灯（左车道直行、右车道右转同时放行）
-- 东西方向红灯
+**Phase 1 - North-South Passage:**
+- Green light for north-south (left lane straight, right lane right turn allowed simultaneously)
+- Red light for east-west
 
-**相位2 - 东西方向通行：**
-- 东西方向绿灯（左车道直行、右车道右转同时放行）
-- 南北方向红灯
+**Phase 2 - East-West Passage:**
+- Green light for east-west (left lane straight, right lane right turn allowed simultaneously)
+- Red light for north-south
 
-### 车道配置
-- **左车道**: 直行专用
-- **右车道**: 右转专用
+### Lane Configuration
+- **Left Lane**: Straight only
+- **Right Lane**: Right turn only
 
-## 车流模拟
+## Traffic Flow Simulation
 
-### 车辆到达
-- 使用泊松分布模拟车辆到达
-- 各车道到达率可配置
-- 直行车道到达率 > 转弯车道到达率
+### Vehicle Arrivals
+- Vehicle arrivals simulated using Poisson distribution
+- Arrival rates for each lane are configurable
+- Straight lane arrival rate > right turn lane arrival rate
 
-### 车辆类型
-- **小车**: 80%比例
-- **大车**: 20%比例
+### Vehicle Types
+- **Car**: 80%
+- **Truck**: 20%
 
-### 通过时间
-使用截断正态分布模拟车辆通过路口时间：
-- 小车直行: 均值6秒，标准差1秒
-- 大车直行: 均值8秒，标准差1.5秒
-- 小车右转: 均值3秒，标准差1秒
-- 大车右转: 均值4秒，标准差1.5秒
+### Passage Time
+Vehicle passage time at the intersection is simulated using truncated normal distribution:
+- Car straight: mean 6s, std 1s
+- Truck straight: mean 8s, std 1.5s
+- Car right turn: mean 3s, std 1s
+- Truck right turn: mean 4s, std 1.5s
 
-## 优化目标
+## Optimization Objective
 
-### 目标函数
-最小化加权组合：
+### Objective Function
+Minimize the weighted sum:
 ```
-目标值 = w_delay × 平均延误时间 + w_queue × 排队长度
+Objective = w_delay × Average Delay Time + w_queue × Queue Length
 ```
 
-### 权重设置
-- 延误时间权重 (w_delay): 0.6
-- 排队长度权重 (w_queue): 0.4
+### Weight Settings
+- Delay time weight (w_delay): 0.6
+- Queue length weight (w_queue): 0.4
 
-## 配置文件
+## Configuration Files
 
-### 模拟器配置 (`simulator_config.json`)
-包含所有交通模拟相关的参数：
-- 路口几何参数
-- 信号相位设置
-- 车流参数
-- 优化目标权重
+### Simulator Configuration (`simulator_config.json`)
+Contains all traffic simulation-related parameters:
+- Intersection geometry parameters
+- Signal phase settings
+- Traffic flow parameters
+- Optimization objective weights
 
-### 训练配置 (`training_config.json`)
-包含所有强化学习训练相关的参数：
-- 网络架构参数
-- 训练超参数
-- GPU设置
-- 模型保存设置
+### Training Configuration (`training_config.json`)
+Contains all reinforcement learning training-related parameters:
+- Network architecture parameters
+- Training hyperparameters
+- GPU settings
+- Model saving settings
 
-## 安装和运行
+## Installation and Running
 
-### 环境要求
+### Environment Requirements
 - Python 3.7+
-- NVIDIA GPU (推荐) 或 CPU
-- 依赖包见 `requirements.txt`
+- NVIDIA GPU (recommended) or CPU
+- Dependencies listed in `requirements.txt`
 
-### 安装步骤
+### Installation Steps
 ```bash
-# 克隆项目
-git clone [项目地址]
+# Clone the project
+git clone [project address]
 
-# 安装依赖
+# Install dependencies
 pip install -r requirements.txt
 
-# 创建模型保存目录
+# Create model save directory
 mkdir models
 ```
 
-### 运行程序
+### Run the Program
 ```bash
 python main.py
 ```
 
-## 使用说明
+## Usage Instructions
 
-### 演示模式
+### Demo Modes
 
-1. **基础交通模拟**: 使用固定绿灯时间运行交通模拟
-2. **AI智能体训练**: 训练DQN智能体优化信号控制
-3. **AI性能演示**: 使用训练好的AI模型进行信号控制
-4. **策略性能比较**: 比较不同信号控制策略的性能
-5. **交互式演示**: 实时交互式交通模拟
+1. **Basic Traffic Simulation**: Run traffic simulation with fixed green light time
+2. **AI Agent Training**: Train DQN agent to optimize signal control
+3. **AI Performance Demo**: Use trained AI model for signal control
+4. **Strategy Performance Comparison**: Compare performance of different signal control strategies
+5. **Interactive Demo**: Real-time interactive traffic simulation
 
-### 功能特点
+### Feature Highlights
 
-- **简单易用**: 适合初学者理解和使用
-- **参数集中**: 模拟器和训练参数分别管理
-- **可视化友好**: 实时显示交通状态和性能指标
-- **模块化设计**: 各模块独立，便于扩展和维护
-- **GPU加速**: 支持GPU加速训练，提高训练效率
+- **Easy to Use**: Suitable for beginners to understand and use
+- **Centralized Parameters**: Simulator and training parameters managed separately
+- **Visualization Friendly**: Real-time display of traffic status and performance metrics
+- **Modular Design**: Independent modules for easy extension and maintenance
+- **GPU Acceleration**: Supports GPU-accelerated training for improved efficiency
 
-## 技术实现
+## Technical Implementation
 
-### 强化学习算法
-- **算法**: Deep Q-Network (DQN)
-- **状态空间**: 8个车道排队长度 + 相位编码
-- **动作空间**: 10个离散的绿灯时间选项
-- **奖励函数**: 负的目标函数值
+### Reinforcement Learning Algorithm
+- **Algorithm**: Deep Q-Network (DQN)
+- **State Space**: 8 lane queue lengths + phase encoding
+- **Action Space**: 10 discrete green light time options
+- **Reward Function**: Negative value of the objective function
 
-### 神经网络结构
-- 输入层: 18个神经元 (8个排队长度 + 10个相位编码)
-- 隐藏层: 64个神经元
-- 输出层: 10个神经元 (对应10个动作)
+### Neural Network Structure
+- Input layer: 18 neurons (8 queue lengths + 10 phase encodings)
+- Hidden layer: 64 neurons
+- Output layer: 10 neurons (corresponding to 10 actions)
 
-### 训练参数
-- 学习率: 0.001
-- 折扣因子: 0.95
-- 探索率: 1.0 → 0.01 (衰减)
-- 经验回放: 5000个样本
-- 批次大小: 128
+### Training Parameters
+- Learning rate: 0.001
+- Discount factor: 0.95
+- Exploration rate: 1.0 → 0.01 (decay)
+- Experience replay: 5000 samples
+- Batch size: 128
 
-### GPU优化
-- 支持CUDA加速
-- 混合精度训练
-- 梯度裁剪
-- 批量处理优化
+### GPU Optimization
+- Supports CUDA acceleration
+- Mixed precision training
+- Gradient clipping
+- Batch processing optimization
 
-## 性能指标
+## Performance Metrics
 
-### 评估指标
-- **平均延误时间**: 车辆从到达到通过的总时间
-- **排队长度**: 各车道排队车辆数
-- **吞吐量**: 单位时间内通过路口的车辆数
-- **目标函数值**: 加权组合指标
+### Evaluation Metrics
+- **Average Delay Time**: Total time from vehicle arrival to passage
+- **Queue Length**: Number of queued vehicles per lane
+- **Throughput**: Number of vehicles passing through the intersection per unit time
+- **Objective Function Value**: Weighted composite metric
 
-### 可视化指标
-- 实时交通状态显示
-- 性能指标趋势图
-- 策略比较图表
+### Visualization Metrics
+- Real-time traffic status display
+- Performance trend charts
+- Strategy comparison charts
 
-## 扩展建议
+## Extension Suggestions
 
-1. **更复杂的神经网络**: 使用卷积神经网络或循环神经网络
-2. **多路口协调**: 扩展到多个路口的协调控制
-3. **实时数据接入**: 接入真实的交通数据
-4. **行人考虑**: 加入行人和非机动车的影响
-5. **紧急车辆**: 考虑紧急车辆的优先通行
-6. **自适应学习**: 实现在线学习和适应
+1. **More Complex Neural Networks**: Use CNN or RNN
+2. **Multi-Intersection Coordination**: Extend to coordinated control of multiple intersections
+3. **Real-Time Data Integration**: Integrate real traffic data
+4. **Pedestrian Consideration**: Include pedestrians and non-motorized vehicles
+5. **Emergency Vehicles**: Consider priority passage for emergency vehicles
+6. **Adaptive Learning**: Implement online learning and adaptation
 
-## 作者
+## Author
 
-[您的姓名]
+[Your Name]
 
-## 许可证
+## License
 
-[许可证信息] 
+[License Information] 
